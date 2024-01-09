@@ -1,10 +1,12 @@
-import requests
+from datetime import datetime
 from typing import List, Any
+
+import requests
+from jira import JIRA, Issue, resources
 from jira.client import ResultList
 from jira.resources import Resource
 from requests.auth import HTTPBasicAuth
-from jira import JIRA, Issue, resources
-from datetime import datetime
+
 from config.app_config import AppConfig
 
 

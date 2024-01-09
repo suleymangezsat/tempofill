@@ -1,6 +1,8 @@
-import requests
-from typing import List, Any, Dict
 from datetime import datetime
+from typing import List, Any, Dict
+
+import requests
+
 from config.app_config import AppConfig
 
 

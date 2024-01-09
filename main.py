@@ -1,16 +1,16 @@
+import json
+from collections import defaultdict
+from datetime import datetime, timedelta, timezone
 from typing import List, Dict, Tuple, Any, Literal
 
+import pytz
 from jira import Issue
 
-import gcalendar
-import json
-from datetime import datetime, timedelta, timezone
-from collections import defaultdict
-import pytz
+from gcalendar import gcalendar
 from config.app_config import AppConfig
-from jira_client import JiraClient
+from jira_client.jira_client import JiraClient
 from models.activity import Activity
-from tempo_client import TempoClient
+from tempo.tempo_client import TempoClient
 
 config = AppConfig()
 jira_client = JiraClient(config)
@@ -19,7 +19,7 @@ calendar_service = gcalendar.get_calendar_service()
 tz = pytz.timezone(config.RUN_TIMEZONE)
 
 
-def fill_tempo(name):
+def fill_tempo():
     ongoing_issues = []
 
     worklog_from_date = datetime.strptime(config.RUN_START_DATE, '%Y-%m-%d').replace(
@@ -351,8 +351,5 @@ def add_issue_work(issue_work: Dict[str, List[Activity]], issue: Issue, item: An
     issue_work[issue.key] = works
 
 
-# Press the green button in t   he gutter to run the script.
 if __name__ == '__main__':
-    fill_tempo('PyCharm')
-
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
+    fill_tempo()
