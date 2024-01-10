@@ -14,6 +14,7 @@ class AppConfig:
         self.JIRA_SERVER = self.config_reader.get('jira', 'server')
         self.JIRA_USERNAME = self.config_reader.get_secure('jira', 'username', 'JIRA_USERNAME')
         self.JIRA_API_KEY = self.config_reader.get_secure('jira', 'api_key', 'JIRA_API_KEY')
+        self.JIRA_MEETING_ISSUE_ID = self.config_reader.get('jira', 'meeting_issue_id')
 
         self.GCALENDAR_EMAIL = self.config_reader.get_secure('gcalendar', 'email', 'GCALENDAR_EMAIL')
 
@@ -25,3 +26,4 @@ class AppConfig:
 
         self.WORKDAY_START_HOUR = int(self.config_reader.get('work_schedule', 'workday_start_hour', fallback='9'))
         self.WORKDAY_DURATION_HOURS = int(self.config_reader.get('work_schedule', 'workday_duration_hours', fallback='8'))
+        self.COMMENT_DURATION_HOURS = int(self.config_reader.get('work_schedule', 'comment_duration_hours', fallback='2'))

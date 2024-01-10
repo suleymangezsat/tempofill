@@ -15,9 +15,25 @@ TempoFill is an automation tool designed to streamline the process of logging wo
    ```bash
    git clone https://github.com/suleymangezsat/TempoFill.git
    ```
-2. **Install required packages**:
+2. **Install required packages**  (Skip this step if you plan to use Docker):
    ```bash
    pip install -r requirements.txt
+   ```
+
+### Docker Setup
+
+1. **Build the Docker image**:
+   
+   Navigate to the project directory and run:
+   ```bash
+   docker build -t tempofill .
+   ```
+
+2. **Verify the Image**:
+   
+   Check that the image was created successfully:
+   ```bash
+   docker images
    ```
    
 ## Configuration
@@ -44,6 +60,7 @@ Before running TempoFill, you need to set up your configuration:
      - `server`: The URL of your Jira server.
      - `username`: Your Jira username (usually your email).
      - `api_key`: Your Jira API key for authentication.
+     - `meeting_issue_id`: Used to specify the ID of a Jira issue that represents collective or team activities such as planning sessions, group internal meetings, or any general team-related work. This ID is particularly useful for logging time against a common Jira issue that encapsulates various team interactions which may not be linked to a specific project task or individual issue.
 
      ### [gcalendar]
      - `email`: The email address associated with your Google Calendar.
@@ -59,16 +76,26 @@ Before running TempoFill, you need to set up your configuration:
      ### [work_schedule]
      - `workday_start_hour`: The hour at which your workday typically starts (e.g., `9` for 9 AM).
      - `workday_duration_hours`: The typical duration of your workday in hours (e.g., `8` for 8 hours).
-
+     - `comment_duration_hours`: The fixed number of hours to allocate for each Jira comment activity. This setting is used to automatically log a consistent amount of time for commenting tasks in Jira. For example, if you generally spend about one hour on commenting or reviewing comments on a task, setting this value to `1` will log one hour for each comment activity.
     
 3. **First Run**:
 - Upon the first run of the application, you will be prompted to authenticate with Google Calendar. Follow the instructions to complete the authentication process. This will generate a `token.json` file in your project directory, storing your user credentials.
 
 ## Usage
-To run the application:
-   ```bash
-   python main.py
-   ```
+### Running Without Docker
+
+To run the application directly on your machine:
+
+```bash
+python main.py
+```
+
+### Running With Docker
+   
+Mount the **config.ini**, **credentials.json** and **token.json** files to use your configuration:
+```bash
+docker run -it --rm --name tempofill-app -v "$(pwd)/config.ini:/usr/src/app/config.ini" -v "$(pwd)/credentials.json:/usr/src/app/credentials.json" -v "$(pwd)/token.json:/usr/src/app/token.json" tempofill
+```
 
 ## Contributing
 Contributions to TempoFill are welcome! Feel free to report issues or submit pull requests.

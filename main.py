@@ -111,7 +111,7 @@ def process_calendar_events(calendar_start_date: datetime, calendar_end_date: da
             start = event['start'].get('dateTime', event['start'].get('date'))
             end = event['end'].get('dateTime', event['end'].get('date'))
             calendar_issues.append(Activity(
-                id=190786,
+                id=config.JIRA_MEETING_ISSUE_ID,
                 key=event['summary'],
                 type="Meeting",
                 start_time=datetime.fromisoformat(start),
@@ -210,7 +210,7 @@ def process_issue_comments(issue: Issue, issue_work: Dict[str, List[Activity]]) 
                 id=issue.id,
                 key=issue.key,
                 type="Comment",
-                start_time=created_time - timedelta(hours=2),
+                start_time=created_time - timedelta(hours=config.COMMENT_DURATION_HOURS),
                 end_time=created_time
             ))
             print(f"Comment - {comment.created} - Issue: {issue.key}")
